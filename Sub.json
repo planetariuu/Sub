@@ -1,1 +1,169 @@
-0891b0c5
+{
+  "store": {
+    "profile-title": "Planetariuu | happ subscription",
+    "profile-creator": "Planetariuu",
+    "profile-update-interval": 6
+  },
+  "dns": {
+    "servers": [
+      { "tag": "dns_direct", "address": "https://1.1.1.1/dns-query", "detour": "direct" },
+      { "tag": "dns_proxy", "address": "https://8.8.8.8/dns-query", "detour": "🚀 Авто-Выбор (Самый быстрый)" }
+    ],
+    "rules": [
+      { "clash_mode": "Direct", "server": "dns_direct" },
+      { "clash_mode": "Global", "server": "dns_proxy" },
+      { "package_name": ["com.obsproject.obs", "obs64.exe", "obs32.exe"], "server": "dns_direct" },
+      { "domain_suffix": ["twitch.tv", "ttvnw.net", "jtvnw.net"], "server": "dns_direct" }
+    ]
+  },
+  "outbounds": [
+    {
+      "type": "urltest",
+      "tag": "🚀 Авто-Выбор (Самый быстрый)",
+      "outbounds": [
+        "NL-Shadowsocks", "FI-Chacha", "DE-Chacha", "LV-Chacha", "AL-Chacha", 
+        "DE-Amazon-SS", "SE-Chacha", "RU-Megafon-Vless", "RU-Mts-Vless", "NL-Beeline-Vless", 
+        "RU-Tele2-Vless", "TR-Yandex-Vless", "GB-Vws-Vless", "DE-Workers-Vless", "BE-Cypher-Vless",
+        "DE-Akinamo-Vless", "AT-Vienna-Hy2", "DE-Faq-Hy2", "DE-Dusseldorf-Hy2", "DE-Frankfurt-Hy2", 
+        "DE-Aura-Hy2", "DE-Veil-Hy2", "HK-WangCai-Hy2", "IS-Keflavik-Hy2", "JP-Chiyoda-Hy2", 
+        "LV-Riga-Hy2", "NO-Oslo-Hy2", "PL-Warsaw-Hy2", "RO-Navodari-Hy2", "SG-Singapore-Hy2", 
+        "SE-Stockholm-Hy2", "TW-Taoyuan-Hy2", "NL-Amsterdam-Hy2", "GB-London-Hy2", "DE-Anycast-Hy2",
+        "FI-Helsinki-Trojan", "FR-Paris-Trojan", "DE-Innenstadt-Trojan", "IN-Delhi-Trojan", "ID-Jakarta-Trojan", 
+        "JP-Tokyo-Trojan", "PL-Warsaw-Trojan"
+      ],
+      "url": "https://www.gstatic.com/generate_204",
+      "interval": "3m",
+      "tolerance": 50
+    },
+    { "type": "direct", "tag": "direct" },
+    { "type": "block", "tag": "block" },
+    
+    { "type": "shadowsocks", "tag": "NL-Shadowsocks", "server": "158.173.20.208", "server_port": 443, "method": "aes-128-gcm", "password": "shadowsocks" },
+    { "type": "shadowsocks", "tag": "FI-Chacha", "server": "62.238.41.102", "server_port": 1080, "method": "chacha20-ietf-poly1305", "password": "L08m8dHSs5als8CB_Fq2qD69" },
+    { "type": "shadowsocks", "tag": "DE-Chacha", "server": "178.128.195.253", "server_port": 10070, "method": "chacha20-ietf-poly1305", "password": "sarbazanshahi" },
+    { "type": "shadowsocks", "tag": "LV-Chacha", "server": "195.123.209.159", "server_port": 1080, "method": "chacha20-ietf-poly1305", "password": "Vr06rU_v1vFPYeXq9zbsAA" },
+    { "type": "shadowsocks", "tag": "AL-Chacha", "server": "157.22.240.141", "server_port": 57925, "method": "chacha20-ietf-poly1305", "password": "FXpDf7WV6lfD6n9hpz7HF2" },
+    { "type": "shadowsocks", "tag": "DE-Amazon-SS", "server": "3.75.172.120", "server_port": 443, "method": "aes-256-cfb", "password": "amazonskr05" },
+    { "type": "shadowsocks", "tag": "SE-Chacha", "server": "185.117.88.9", "server_port": 1080, "method": "chacha20-ietf-poly1305", "password": "Vr06rU_v1vFPYeXq9zbsAA" },
+    
+    {
+      "type": "vless", "tag": "RU-Megafon-Vless", "server": "5.188.114.73", "server_port": 18443, "uuid": "089845a1-3746-4efd-a48b-b2d176337a5f",
+      "tls": { "enabled": true, "server_name": "id.pervye.ru", "utls": { "enabled": true, "fingerprint": "firefox" }, "reality": { "enabled": true, "public_key": "olUTV28dWkomVkfH50avy8iELvc2gohx2fJF6bokqGI" } },
+      "transport": { "type": "grpc", "service_name": "ns" }
+    },
+    {
+      "type": "vless", "tag": "RU-Mts-Vless", "server": "epic-battle.whit3.net", "server_port": 443, "uuid": "a4bdd83e-0f33-4946-898c-0062c2011482",
+      "tls": { "enabled": true, "server_name": "epic-battle.whit3.net", "utls": { "enabled": true, "fingerprint": "chrome" } },
+      "transport": { "type": "xhttp", "host": "epic-battle.whit3.net", "path": "/api/v1/" }
+    },
+    {
+      "type": "vless", "tag": "NL-Beeline-Vless", "server": "yc-fl-1.whit3.net", "server_port": 443, "uuid": "a4bdd83e-0f33-4946-898c-0062c2011482",
+      "tls": { "enabled": true, "server_name": "yc-fl-1.whit3.net", "utls": { "enabled": true, "fingerprint": "chrome" } },
+      "transport": { "type": "xhttp", "host": "yc-fl-1.whit3.net", "path": "/api/v1/" }
+    },
+    {
+      "type": "vless", "tag": "RU-Tele2-Vless", "server": "188.72.103.3", "server_port": 443, "uuid": "d7e66e44-b758-4d1f-bc9f-5c55e33fce49",
+      "tls": { "enabled": true, "server_name": "cdn-ru1.stream-concept.buzz", "utls": { "enabled": true, "fingerprint": "firefox" }, "alpn": ["h3", "h2", "http/1.1"] },
+      "transport": { "type": "xhttp", "host": "cdn-ru1.stream-concept.buzz", "path": "/uploadfiles/" }
+    },
+    {
+      "type": "vless", "tag": "TR-Yandex-Vless", "server": "45.196.201.243", "server_port": 443, "uuid": "1ddee681-4008-43e5-80cc-69fe44ce96e0", "flow": "xtls-rprx-vision",
+      "tls": { "enabled": true, "server_name": "storage.yandex.net", "utls": { "enabled": true, "fingerprint": "firefox" }, "reality": { "enabled": true, "public_key": "zii4nGNapnFKL6SN8GzWNqFlElBvUCUFUThEP0kFH04", "short_id": "205748bc0f24a747" } }
+    },
+    {
+      "type": "vless", "tag": "GB-Vws-Vless", "server": "91.193.58.47", "server_port": 2053, "uuid": "663cf772-829c-4bc6-893d-b7d021d42f5b",
+      "tls": { "enabled": true, "server_name": "vp8.cc.cd", "utls": { "enabled": true, "fingerprint": "android" } },
+      "transport": { "type": "ws", "host": "vp8.cc.cd", "path": "/" }
+    },
+    {
+      "type": "vless", "tag": "DE-Workers-Vless", "server": "87.120.92.151", "server_port": 6543, "uuid": "ff39543a-4695-4860-9c7a-ff9b4083d928",
+      "tls": { "enabled": true, "server_name": "3tmj2egtm-fno.49bnithzk8vphybv36d1z1xkzfvogt2m6.workers.dev", "utls": { "enabled": true, "fingerprint": "firefox" } },
+      "transport": { "type": "ws", "host": "3tmj2egtm-fno.49bnithzk8vphybv36d1z1xkzfvogt2m6.workers.dev", "path": "/@Marisa_kristi" }
+    },
+    {
+      "type": "vless", "tag": "BE-Cypher-Vless", "server": "31.77.131.16", "server_port": 2443, "uuid": "8bba3194-4856-46d1-8319-075817d87eb1", "flow": "xtls-rprx-vision",
+      "tls": { "enabled": true, "server_name": "nl6.cyphervpn.pro", "utls": { "enabled": true, "fingerprint": "firefox" }, "reality": { "enabled": true, "public_key": "-KXksmJF8nKxlRkGQmQUxTaL8bwo9ovMWtM5eDFVqx8", "short_id": "a90b11965b93922b" } }
+    },
+    {
+      "type": "vless", "tag": "DE-Akinamo-Vless", "server": "new.akinamo.willbe.sinitk.outforyou.ir", "server_port": 20580, "uuid": "612d16de-aebd-4738-829e-533dbfa9e936",
+      "tls": { "enabled": true, "server_name": "play.google.com", "utls": { "enabled": true, "fingerprint": "chrome" }, "reality": { "enabled": true, "public_key": "gqjS9wwxycF16Qf02GDt1UrvdrF_neQgj1Crduo_xB0", "short_id": "d5c1b9" } }
+    },
+
+    { "type": "hysteria2", "tag": "AT-Vienna-Hy2", "server": "185.126.236.152", "server_port": 8443, "password": "Ov_98eqvJ9N8SE3_Bxhr238e_Ntz2_Sxc47_J2", "tls": { "enabled": true, "server_name": "key-hm-at.1cooldns.com" } },
+    { "type": "hysteria2", "tag": "DE-Faq-Hy2", "server": "histerrr-faq-www.ru", "server_port": 443, "password": "8f0560ec-ba22-4431-a6a7-318dc59d5233", "tls": { "enabled": true, "server_name": "histerrr-faq-www.ru" } },
+    { "type": "hysteria2", "tag": "DE-Dusseldorf-Hy2", "server": "213.202.219.29", "server_port": 8443, "password": "0I_Vi934gK9_Mq3240Xs_Bv2_kUi8Q34183g9hj_Bv6_7a", "tls": { "enabled": true, "server_name": "grape-sos-de.roxa.org" } },
+    { "type": "hysteria2", "tag": "DE-Frankfurt-Hy2", "server": "newlte.kihsuyhf8jkiugsxb.cfd", "server_port": 9443, "password": "1f31377f-a6bc-461f-9745-be3ed0ff4ecd", "tls": { "enabled": true, "server_name": "newlte.kihsuyhf8jkiugsxb.cfd" } },
+    { "type": "hysteria2", "tag": "DE-Aura-Hy2", "server": "ge01.auragg.org", "server_port": 443, "password": "b05346a9-4d13-41a4-8d2a-6b7b64e73ffc", "tls": { "enabled": true, "server_name": "ge01.auragg.org" } },
+    { "type": "hysteria2", "tag": "DE-Veil-Hy2", "server": "de1-hy2.veilvpn.life", "server_port": 8433, "password": "d2e3768f-cb23-4cfc-a884-dbd6813cb70b", "tls": { "enabled": true, "server_name": "de1-hy2.veilvpn.life" } },
+    { "type": "hysteria2", "tag": "HK-WangCai-Hy2", "server": "202.146.222.29", "server_port": 443, "password": "H7mP2xY9kJ4nQ8wR5tF6vB3z", "tls": { "enabled": true, "server_name": "https://t.me/WangCai2", "insecure": true } },
+    { "type": "hysteria2", "tag": "IS-Keflavik-Hy2", "server": "82.22.53.30", "server_port": 8443, "password": "grape_288923", "tls": { "enabled": true, "server_name": "grape-coffee-fi.gleeze.com" } },
+    { "type": "hysteria2", "tag": "JP-Chiyoda-Hy2", "server": "57.181.33.93", "server_port": 64900, "password": "2n8QPNzHhWI0bDnv", "tls": { "enabled": true, "server_name": "bing.com", "insecure": true } },
+    { "type": "hysteria2", "tag": "LV-Riga-Hy2", "server": "hys.unlimitedteam.space", "server_port": 443, "password": "6fa1b8eb-56f4-4f41-97dc-e0185bcfc575", "tls": { "enabled": true, "server_name": "hys.unlimitedteam.space" } },
+    { "type": "hysteria2", "tag": "NO-Oslo-Hy2", "server": "144.31.217.155", "server_port": 443, "password": "925da974-d0b1-4686-bedb-92f5ffcae8d2", "tls": { "enabled": true, "server_name": "norway.b240i4.apruxdomain.site" } },
+    { "type": "hysteria2", "tag": "PL-Warsaw-Hy2", "server": "pl02.auragg.org", "server_port": 443, "password": "b05346a9-4d13-41a4-8d2a-6b7b64e73ffc", "tls": { "enabled": true, "server_name": "pl02.auragg.org" } },
+    { "type": "hysteria2", "tag": "RO-Navodari-Hy2", "server": "85.120.228.208", "server_port": 47257, "password": "35415e5e-3666-4454-8c45-903af0fcddf4", "tls": { "enabled": true, "server_name": "www.bing.com", "insecure": true, "alpn": ["h3"] } },
+    { "type": "hysteria2", "tag": "SG-Singapore-Hy2", "server": "209.74.81.28", "server_port": 8443, "password": "b7c9e2f1-4d83-42a1-9e5f-sg2026proxy", "tls": { "enabled": true, "insecure": true } },
+    { "type": "hysteria2", "tag": "SE-Stockholm-Hy2", "server": "sw02.auragg.org", "server_port": 8443, "password": "b05346a9-4d13-41a4-8d2a-6b7b64e73ffc", "tls": { "enabled": true, "server_name": "sw02.auragg.org" } },
+    { "type": "hysteria2", "tag": "TW-Taoyuan-Hy2", "server": "vpn-tw-002.fastervpn.world", "server_port": 443, "password": "H7mP2xY9kJ4nQ8wR5tF6vB3z", "tls": { "enabled": true, "server_name": "vpn-tw-002.fastervpn.world", "insecure": true } },
+    { "type": "hysteria2", "tag": "NL-Amsterdam-Hy2", "server": "150.241.100.103", "server_port": 443, "password": "925da974-d0b1-4686-bedb-92f5ffcae8d2", "tls": { "enabled": true, "server_name": "netherlands.b240i4.apruxdomain.site" } },
+    { "type": "hysteria2", "tag": "GB-London-Hy2", "server": "151.247.219.191", "server_port": 8443, "password": "7_Bz834J98n238cNbx7cjLAw_Nux28c_kIO1Hq86Vr", "tls": { "enabled": true, "server_name": "hopp-queen.roxa.org" } },
+    { "type": "hysteria2", "tag": "DE-Anycast-Hy2", "server": "de5-hy2.veilvpn.life", "server_port": 8443, "password": "d2e3768f-cb23-4cfc-a884-dbd6813cb70b", "tls": { "enabled": true, "server_name": "de5-hy2.veilvpn.life" } },
+
+    {
+      "type": "trojan", "tag": "FI-Helsinki-Trojan", "server": "83.228.227.156", "server_port": 47154, "password": "-----------BanV2ray-----------",
+      "tls": { "enabled": true, "server_name": "chi.yahoo.com", "utls": { "enabled": true, "fingerprint": "firefox" }, "reality": { "enabled": true, "public_key": "6PX0SCkt6TANowjz80Ugiv4cSg0vF8g0mVt4WbyIGhI", "short_id": "c5" } },
+      "transport": { "type": "grpc", "service_name": "/185c45c838cb9ee" }
+    },
+    {
+      "type": "trojan", "tag": "FR-Paris-Trojan", "server": "185.75.243.102", "server_port": 443, "password": "humanity",
+      "tls": { "enabled": true, "server_name": "www.ignitelimit.com", "utls": { "enabled": true, "fingerprint": "chrome" }, "alpn": ["h3", "h2", "http/1.1"] },
+      "transport": { "type": "ws", "host": "www.ignitelimit.com", "path": "/assignment" }
+    },
+    {
+      "type": "trojan", "tag": "DE-Innenstadt-Trojan", "server": "uupupupuppupupupuuppupupupupuup-11.poki-pakipon.ir", "server_port": 47375, "password": "-----------BanV2ray-----------",
+      "tls": { "enabled": true, "server_name": "chi.yahoo.com", "utls": { "enabled": true, "fingerprint": "firefox" }, "reality": { "enabled": true, "public_key": "6PX0SCkt6TANowjz80Ugiv4cSg0vF8g0mVt4WbyIGhI", "short_id": "05626eef4c" } },
+      "transport": { "type": "grpc", "service_name": "/185c45c838cb9ee" }
+    },
+    {
+      "type": "trojan", "tag": "IN-Delhi-Trojan", "server": "hyfuuf6.wsone.icu", "server_port": 443, "password": "M7v%w11Se*", "tls": { "enabled": true, "utls": { "enabled": true, "fingerprint": "firefox" } } },
+      "type": "trojan", "tag": "ID-Jakarta-Trojan", "server": "qfdfsg.wsone.icu", "server_port": 443, "password": "M7v%w11Se*", "tls": { "enabled": true, "server_name": "qfdfsg.wsone.icu", "utls": { "enabled": true, "fingerprint": "firefox" } } },
+    {
+      "type": "trojan", "tag": "JP-Tokyo-Trojan", "server": "103.106.228.187", "server_port": 54603, "password": "u2sVknrSIFjDojeqAUjgYk89m9szHcMQ",
+      "tls": { "enabled": true, "insecure": true, "utls": { "enabled": true, "fingerprint": "chrome" } }
+    },
+    {
+      "type": "trojan", "tag": "PL-Warsaw-Trojan", "server": "81.255.155.10", "server_port": 443, "password": "humanity",
+      "tls": { "enabled": true, "server_name": "www.creationlong.org", "utls": { "enabled": true, "fingerprint": "firefox" } },
+      "transport": { "type": "ws", "path": "/assignment" }
+    }
+  ],
+  "routing": {
+    "rules": [
+      { "clash_mode": "Direct", "outbound": "direct" },
+      { "clash_mode": "Global", "outbound": "🚀 Авто-Выбор (Самый быстрый)" },
+      
+      {
+        "package_name": [
+          "com.obsproject.obs",
+          "obs64.exe",
+          "obs32.exe"
+        ],
+        "outbound": "direct"
+      },
+      {
+        "domain_suffix": [
+          "twitch.tv",
+          "ttvnw.net",
+          "jtvnw.net",
+          "twitchcdn.net"
+        ],
+        "outbound": "direct"
+      },
+      {
+        "protocol": "dns",
+        "outbound": "dns"
+      }
+    ],
+    "auto_detect_interface": true
+  }
+}
