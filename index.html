@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Выборы Мэра Сервера</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f8fafc;
+  --card:#ffffff;
+  --text:#0f172a;
+  --muted:#64748b;
+  --line:#e2e8f0;
+  --blue:#2563eb;
+  --blue-dark:#1e40af;
+  --blue-light:#3b82f6;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+
+body{
+  font-family:'Inter','Segoe UI',system-ui,sans-serif;
+  color:var(--text);
+  background:
+    radial-gradient(820px 480px at 8% 0%, #dbeafe 0%, transparent 62%),
+    radial-gradient(820px 480px at 92% 0%, #e0f2fe 0%, transparent 62%),
+    var(--bg);
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  padding:14px 20px 16px;
+  gap:22px;
+  -webkit-font-smoothing:antialiased;
+}
+
+header{
+  flex:none;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:9px;
+}
+
+h1{
+  font-size:clamp(1.3rem,2.8vw,1.8rem);
+  font-weight:900;
+  letter-spacing:-.03em;
+  line-height:1.05;
+  text-align:center;
+  color:var(--blue);
+  filter:drop-shadow(0 1px 0 rgba(255,255,255,.9));
+}
+
+.countdown{display:flex;gap:7px;justify-content:center;flex-wrap:wrap}
+
+.cd-item{
+  min-width:68px;
+  padding:7px 11px 5px;
+  border-radius:11px;
+  background:linear-gradient(135deg,#93c5fd 0%,#60a5fa 50%,#3b82f6 100%);
+  box-shadow:0 10px 22px -12px rgba(59,130,246,.7),
+             inset 0 1px 0 rgba(255,255,255,.5);
+  text-align:center;
+}
+
+.cd-num{
+  font-size:clamp(1.15rem,2.4vw,1.6rem);
+  font-weight:900;
+  font-variant-numeric:tabular-nums;
+  letter-spacing:-.03em;
+  line-height:1;
+  background:linear-gradient(180deg,#ffffff 0%,#e0e7ff 42%,#ffffff 58%,#bfdbfe 100%);
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+  filter:drop-shadow(0 1px 1px rgba(30,64,175,.45));
+}
+
+.cd-label{
+  font-size:.52rem;
+  color:rgba(255,255,255,.9);
+  text-transform:uppercase;
+  letter-spacing:.14em;
+  margin-top:3px;
+  font-weight:700;
+}
+
+.cd-ended{
+  font-size:.92rem;
+  font-weight:800;
+  padding:11px 22px;
+  border-radius:11px;
+  background:linear-gradient(135deg,#93c5fd,#3b82f6);
+  color:#fff;
+  box-shadow:0 12px 26px -14px rgba(59,130,246,.75);
+}
+
+.candidates-grid{
+  flex:1;
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  align-content:flex-start;
+  gap:16px;
+  width:100%;
+  max-width:1240px;
+  margin:0 auto;
+  padding-top:6px;
+  padding-bottom:4px;
+}
+
+.candidate-card{
+  position:relative;
+  display:flex;
+  flex-direction:column;
+  width:340px;
+  flex:0 0 auto;
+  padding:12px 12px 12px;
+  border-radius:14px;
+  background:var(--card);
+  border:2px solid var(--line);
+  box-shadow:0 3px 14px -10px rgba(15,23,42,.2);
+  transition:transform .28s cubic-bezier(.2,.8,.3,1),
+             border-color .28s ease,
+             box-shadow .28s ease;
+}
+
+.candidate-card:hover{
+  transform:translateY(-3px);
+  border-color:rgba(var(--c-rgb),.6);
+  box-shadow:
+    0 0 0 4px rgba(var(--c-rgb),.18),
+    0 14px 30px -18px rgba(var(--c-rgb),.7);
+}
+
+.candidate-card.is-chosen{
+  transform:scale(1.02);
+  z-index:5;
+  border-color:var(--c);
+  box-shadow:
+    0 0 0 5px rgba(var(--c-rgb),.3),
+    0 18px 38px -20px rgba(var(--c-rgb),.8);
+}
+.candidate-card.is-chosen:hover{
+  transform:translateY(-3px) scale(1.02);
+}
+
+@keyframes pop{
+  0%{transform:scale(1.02)}
+  45%{transform:scale(1.06)}
+  100%{transform:scale(1.02)}
+}
+.candidate-card.just-voted{animation:pop .5s cubic-bezier(.2,.8,.3,1)}
+
+.skin{
+  position:relative;
+  width:100%;
+  height:240px;
+  margin-bottom:12px;
+  flex:none;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.skin img{
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  display:block;
+  transition:transform .28s cubic-bezier(.2,.8,.3,1);
+}
+
+.skin-ph{
+  font-size:.68rem;
+  font-weight:700;
+  color:#cbd5e1;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  text-align:center;
+  line-height:1.6;
+}
+
+.candidate-card:hover .skin img,
+.candidate-card.is-chosen .skin img{
+  transform:scale(1.04);
+}
+
+.cand-name{
+  font-size:1.15rem;
+  font-weight:800;
+  letter-spacing:-.02em;
+  line-height:1.15;
+  color:var(--text);
+  margin-bottom:10px;
+}
+
+.field{
+  display:flex;
+  align-items:center;
+  gap:5px;
+  margin-bottom:6px;
+  padding-bottom:6px;
+  border-bottom:1px solid var(--line);
+}
+
+.field-dot{
+  width:7px;
+  height:7px;
+  border-radius:2px;
+  background:var(--c);
+  flex:none;
+}
+
+.field-label{
+  font-size:.58rem;
+  font-weight:800;
+  text-transform:uppercase;
+  letter-spacing:.12em;
+  color:#475569;
+}
+
+.cand-bio{
+  height:92px;
+  overflow:hidden;
+  white-space:pre-line;
+  word-break:break-word;
+  font-weight:400;
+  letter-spacing:.01em;
+  color:#475569;
+  text-align:left;
+  line-height:1.5;
+  margin-bottom:12px;
+}
+
+.results{
+  width:100%;
+  margin-bottom:8px;
+  flex:none;
+}
+
+.results-top{
+  display:flex;
+  justify-content:space-between;
+  align-items:baseline;
+  font-size:.53rem;
+  font-weight:800;
+  text-transform:uppercase;
+  letter-spacing:.09em;
+  color:var(--muted);
+  margin-bottom:4px;
+}
+
+.results-top b{
+  font-size:.85rem;
+  font-weight:900;
+  color:var(--text);
+  letter-spacing:0;
+  font-variant-numeric:tabular-nums;
+}
+
+.results-top em{
+  font-style:normal;
+  font-size:.6rem;
+  color:var(--muted);
+  font-weight:700;
+  margin-left:4px;
+}
+
+.bar{
+  height:5px;
+  border-radius:999px;
+  background:#eef2f7;
+  overflow:hidden;
+}
+
+.bar i{
+  display:block;
+  height:100%;
+  width:0;
+  border-radius:999px;
+  background:var(--c);
+  transition:width .8s cubic-bezier(.2,.8,.3,1);
+}
+
+.btn-vote{
+  width:100%;
+  padding:10px 12px;
+  border-radius:9px;
+  border:none;
+  background:var(--c);
+  color:#fff;
+  font:inherit;
+  font-size:.72rem;
+  font-weight:800;
+  letter-spacing:.05em;
+  text-transform:uppercase;
+  cursor:pointer;
+  flex:none;
+  transition:filter .2s ease, transform .12s ease;
+}
+
+.btn-vote:not(:disabled):hover{filter:brightness(.9)}
+.btn-vote:not(:disabled):active{transform:scale(.975)}
+
+.btn-vote:disabled{
+  cursor:not-allowed;
+  background:#eef2f7;
+  color:#94a3b8;
+}
+
+.btn-vote.is-voted{
+  cursor:default;
+  background:var(--c);
+  color:#fff;
+}
+
+footer{
+  flex:none;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:5px;
+  padding-top:4px;
+}
+
+.total-panel{
+  display:flex;
+  align-items:center;
+  gap:11px;
+  padding:7px 22px;
+  border-radius:10px;
+  background:#fff;
+  border:1px solid var(--line);
+  box-shadow:0 8px 22px -18px rgba(37,99,235,.6);
+}
+
+.total-label{
+  font-size:.6rem;
+  font-weight:800;
+  text-transform:uppercase;
+  letter-spacing:.12em;
+  color:var(--muted);
+}
+
+.total-num{
+  font-size:1.25rem;
+  font-weight:900;
+  color:var(--blue);
+  font-variant-numeric:tabular-nums;
+  letter-spacing:-.03em;
+  line-height:1;
+}
+
+.period{
+  font-size:.66rem;
+  color:var(--muted);
+  font-weight:600;
+}
+
+.modal-overlay{
+  position:fixed;
+  inset:0;
+  z-index:100;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+  background:rgba(15,23,42,.4);
+  backdrop-filter:blur(5px);
+  opacity:0;
+  pointer-events:none;
+  transition:opacity .2s ease;
+}
+.modal-overlay.active{opacity:1;pointer-events:all}
+
+.modal{
+  width:100%;
+  max-width:380px;
+  padding:22px 22px 20px;
+  border-radius:18px;
+  background:#fff;
+  box-shadow:0 40px 90px -30px rgba(15,23,42,.55);
+  text-align:center;
+  transform:translateY(12px) scale(.97);
+  transition:transform .28s cubic-bezier(.2,.8,.3,1);
+}
+.modal-overlay.active .modal{transform:translateY(0) scale(1)}
+
+.modal-icon{
+  width:46px;
+  height:46px;
+  margin:0 auto 12px;
+  display:grid;
+  place-items:center;
+  border-radius:13px;
+  font-size:1.3rem;
+  background:linear-gradient(135deg,#60a5fa,#3b82f6);
+  color:#fff;
+}
+
+.modal h3{
+  font-size:1.1rem;
+  font-weight:800;
+  letter-spacing:-.02em;
+  margin-bottom:7px;
+}
+
+.modal p{
+  color:var(--muted);
+  font-size:.86rem;
+  line-height:1.55;
+  margin-bottom:18px;
+}
+
+.modal p strong{color:var(--text);font-weight:800}
+
+.modal-actions{display:flex;gap:9px}
+
+.btn-ghost,.btn-primary{
+  flex:1;
+  padding:11px 14px;
+  border-radius:11px;
+  border:none;
+  font:inherit;
+  font-size:.83rem;
+  font-weight:800;
+  cursor:pointer;
+  transition:background .2s ease, transform .12s ease;
+}
+
+.btn-ghost{background:#f1f5f9;color:var(--text)}
+.btn-ghost:hover{background:#e2e8f0}
+.btn-primary{background:var(--blue);color:#fff}
+.btn-primary:hover{background:var(--blue-dark)}
+.btn-ghost:active,.btn-primary:active{transform:scale(.97)}
+
+.toast{
+  position:fixed;
+  bottom:20px;
+  right:20px;
+  z-index:110;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:12px 18px 12px 14px;
+  border-radius:12px;
+  background:#fff;
+  border:1px solid rgba(37,99,235,.25);
+  box-shadow:0 24px 55px -22px rgba(15,23,42,.4);
+  font-size:.85rem;
+  font-weight:700;
+  color:var(--text);
+  transform:translateY(120px);
+  opacity:0;
+  pointer-events:none;
+  transition:transform .35s cubic-bezier(.2,.8,.3,1), opacity .28s ease;
+}
+.toast.show{transform:translateY(0);opacity:1}
+
+.toast-icon{
+  width:22px;
+  height:22px;
+  flex:none;
+  display:grid;
+  place-items:center;
+  border-radius:6px;
+  background:var(--blue);
+  color:#fff;
+  font-size:.75rem;
+  font-weight:900;
+}
+
+.toast b{color:var(--blue)}
+
+.no-config{
+  width:100%;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  padding:40px 26px;
+  border-radius:15px;
+  background:#fff;
+  border:1px dashed rgba(37,99,235,.3);
+  color:var(--muted);
+  font-size:.88rem;
+  text-align:center;
+  line-height:1.7;
+}
+
+.no-config h2{
+  color:var(--text);
+  font-size:1.05rem;
+  font-weight:800;
+  margin-bottom:8px;
+}
+
+.no-config code{
+  display:inline-block;
+  background:rgba(37,99,235,.09);
+  color:var(--blue-dark);
+  padding:3px 9px;
+  border-radius:6px;
+  font-size:.8rem;
+  margin:2px 0;
+}
+
+@media (max-width:400px){
+  .candidate-card{width:100%}
+  .skin{height:220px}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Выборы Мэра Сервера</h1>
+  <div class="countdown" id="countdown">
+    <div class="cd-item"><div class="cd-num" id="cd-d">--</div><div class="cd-label">дней</div></div>
+    <div class="cd-item"><div class="cd-num" id="cd-h">--</div><div class="cd-label">часов</div></div>
+    <div class="cd-item"><div class="cd-num" id="cd-m">--</div><div class="cd-label">минут</div></div>
+    <div class="cd-item"><div class="cd-num" id="cd-s">--</div><div class="cd-label">секунд</div></div>
+  </div>
+</header>
+
+<main class="candidates-grid" id="grid"></main>
+
+<footer>
+  <div class="total-panel">
+    <span class="total-label">Всего голосов</span>
+    <span class="total-num" id="vote-count">0</span>
+  </div>
+  <p class="period">Период голосования: 18 — 20 сентября 2026</p>
+</footer>
+
+<div class="modal-overlay" id="modal">
+  <div class="modal">
+    <div class="modal-icon">🗳️</div>
+    <h3>Подтвердите выбор</h3>
+    <p>Вы отдаёте голос за <strong id="modal-name">—</strong>.<br>Изменить решение нельзя.</p>
+    <div class="modal-actions">
+      <button class="btn-ghost" id="btn-cancel">Отмена</button>
+      <button class="btn-primary" id="btn-confirm">Проголосовать</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast">
+  <span class="toast-icon">✓</span>
+  <span>Ваш голос за <b id="toast-name">—</b> учтён</span>
+</div>
+
+<script>
+window.PLAYERS = window.PLAYERS || [
+  {
+    name: "Planetariuu",
+    color: "#ef4444",
+    bio: "Никаких слов, только дело!\nУ нас еда бесплатная\nМожно пвп на мёртвой зоне\nНа крыше Ада никакого ПВП!",
+    image: ""
+  }
+];
+</script>
+<script src="config.js" onerror="console.warn('config.js не найден — используются игроки по умолчанию')"></script>
+
+<script>
+const DB_KEY = 'mc-mayor-db-2026';
+const END_TIME = new Date('2026-09-20T16:00:00+03:00').getTime();
+const BIO_LIMIT = 200;
+
+function hexToRgb(hex){
+  let h = String(hex || '#3b82f6').replace('#','');
+  if (h.length === 3) h = h.split('').map(c => c + c).join('');
+  const n = parseInt(h, 16);
+  if (isNaN(n)) return '59,130,246';
+  return `${(n >> 16) & 255},${(n >> 8) & 255},${n & 255}`;
+}
+
+function truncate(text, max){
+  const s = String(text || '').replace(/\r\n/g, '\n').trim();
+  return s.length > max ? s.slice(0, max - 1).trimEnd() + '…' : s;
+}
+
+function escapeHtml(s){
+  return String(s == null ? '' : s).replace(/[&<>"']/g, m => (
+    {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]
+  ));
+}
+
+function bioFontSize(text){
+  const len = String(text || '').length;
+  const minLen = 30, maxLen = BIO_LIMIT;
+  const minFs = 0.8, maxFs = 0.98;
+  if (len <= minLen) return maxFs;
+  if (len >= maxLen) return minFs;
+  const t = (len - minLen) / (maxLen - minLen);
+  return +(maxFs - t * (maxFs - minFs)).toFixed(3);
+}
+
+function pickImage(p){
+  const raw = p.image ?? p.img ?? p.avatar ?? p.photo ?? p.picture ?? '';
+  return String(raw).trim();
+}
+
+function normalizePlayer(p){
+  const name = String(p.name || '').trim();
+  return {
+    name,
+    color: /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.test(String(p.color||'').trim())
+             ? String(p.color).trim() : '#3b82f6',
+    bio: truncate(p.bio || p.description || '', BIO_LIMIT),
+    image: pickImage(p),
+    seed: Number(p.votes) || 0
+  };
+}
+
+const RAW_PLAYERS = Array.isArray(window.PLAYERS) ? window.PLAYERS : [];
+const CANDIDATES = RAW_PLAYERS.map(normalizePlayer).filter(p => p.name);
+
+console.log('[Выборы] Загружено игроков:', CANDIDATES.length);
+CANDIDATES.forEach(c => {
+  console.log(`  • ${c.name} — картинка:`, c.image || '(не указана)');
+});
+
+function loadDB(){
+  let db;
+  try { db = JSON.parse(localStorage.getItem(DB_KEY) || 'null'); }
+  catch(e){ db = null; }
+
+  if (!db || typeof db !== 'object') db = {};
+  if (!db.votes || typeof db.votes !== 'object') db.votes = {};
+  if (typeof db.userVote !== 'string') db.userVote = null;
+
+  CANDIDATES.forEach(c => {
+    if (typeof db.votes[c.name] !== 'number'){
+      db.votes[c.name] = c.seed;
+    }
+  });
+
+  return db;
+}
+
+function saveDB(){
+  try { localStorage.setItem(DB_KEY, JSON.stringify(DB)); } catch(e){}
+}
+
+const DB = loadDB();
+
+let userVote = DB.userVote;
+if (userVote && !CANDIDATES.some(c => c.name === userVote)){
+  userVote = null;
+  DB.userVote = null;
+  saveDB();
+}
+
+const grid      = document.getElementById('grid');
+const totalEl   = document.getElementById('vote-count');
+const modal     = document.getElementById('modal');
+const toast     = document.getElementById('toast');
+const modalName = document.getElementById('modal-name');
+const toastName = document.getElementById('toast-name');
+
+let pendingName = null;
+
+const isEnded    = () => Date.now() > END_TIME;
+const votesOf    = c => Number(DB.votes[c.name]) || 0;
+const totalVotes = () => CANDIDATES.reduce((s, c) => s + votesOf(c), 0);
+
+function render(){
+  const total  = totalVotes();
+  const ended  = isEnded();
+  const locked = !!userVote || ended;
+
+  if (!CANDIDATES.length){
+    grid.innerHTML = `
+      <div class="no-config">
+        <h2>Кандидаты не найдены</h2>
+        Создай файл <code>config.js</code> рядом с <code>index.html</code>:<br><br>
+        <code>window.PLAYERS = [ { name: "Nick", color: "#ef4444", bio: "Описание", image: "images/nick.png" } ];</code>
+      </div>`;
+    totalEl.textContent = 0;
+    return;
+  }
+
+  grid.innerHTML = CANDIDATES.map(c => {
+    const v      = votesOf(c);
+    const pct    = total ? (v / total * 100) : 0;
+    const chosen = userVote === c.name;
+    const rgb    = hexToRgb(c.color);
+    const fs     = bioFontSize(c.bio);
+
+    let label = 'Проголосовать';
+    if (chosen)        label = 'Ваш голос ✓';
+    else if (ended)    label = 'Голосование закрыто';
+    else if (userVote) label = 'Голос отдан';
+
+    const imgHtml = c.image
+      ? `<img src="${escapeHtml(c.image)}" alt="${escapeHtml(c.name)}"
+              loading="lazy"
+              onerror="console.warn('Не загрузилась картинка:', this.src); this.replaceWith(Object.assign(document.createElement('div'),{className:'skin-ph',textContent:'Картинка не найдена'}))">`
+      : `<div class="skin-ph">Нет картинки</div>`;
+
+    return `
+      <article class="candidate-card${chosen ? ' is-chosen' : ''}"
+               style="--c:${c.color};--c-rgb:${rgb}"
+               data-name="${escapeHtml(c.name)}">
+        <div class="skin">${imgHtml}</div>
+
+        <h2 class="cand-name">${escapeHtml(c.name)}</h2>
+
+        <div class="field">
+          <span class="field-dot"></span>
+          <span class="field-label">О себе</span>
+        </div>
+        <p class="cand-bio" style="font-size:${fs}rem">${escapeHtml(c.bio)}</p>
+
+        <div class="results">
+          <div class="results-top">
+            <span>Голосов</span>
+            <span><b>${v}</b><em>${pct.toFixed(0)}%</em></span>
+          </div>
+          <div class="bar"><i data-bar></i></div>
+        </div>
+        <button class="btn-vote${chosen ? ' is-voted' : ''}"
+                data-name="${escapeHtml(c.name)}"
+                ${locked ? 'disabled' : ''}>
+          ${label}
+        </button>
+      </article>`;
+  }).join('');
+
+  totalEl.textContent = total;
+
+  requestAnimationFrame(() => {
+    grid.querySelectorAll('.candidate-card').forEach(card => {
+      const c = CANDIDATES.find(x => x.name === card.dataset.name);
+      if (!c) return;
+      const pct = total ? (votesOf(c) / total * 100) : 0;
+      const bar = card.querySelector('[data-bar]');
+      if (bar) bar.style.width = pct.toFixed(1) + '%';
+    });
+  });
+}
+
+function openModal(name){
+  pendingName = name;
+  modalName.textContent = name;
+  modal.classList.add('active');
+  document.body.style.overflow = 'hidden';
+  setTimeout(() => document.getElementById('btn-confirm').focus(), 60);
+}
+
+function closeModal(){
+  modal.classList.remove('active');
+  document.body.style.overflow = '';
+  pendingName = null;
+}
+
+function confirmVote(){
+  if (!pendingName || userVote || isEnded()) return closeModal();
+  if (!CANDIDATES.some(c => c.name === pendingName)) return closeModal();
+
+  userVote = pendingName;
+  DB.votes[userVote] = (Number(DB.votes[userVote]) || 0) + 1;
+  DB.userVote = userVote;
+  saveDB();
+
+  const votedFor = userVote;
+  closeModal();
+  render();
+
+  const card = grid.querySelector(`.candidate-card[data-name="${CSS.escape(votedFor)}"]`);
+  if (card){
+    card.classList.add('just-voted');
+    setTimeout(() => card.classList.remove('just-voted'), 550);
+  }
+
+  toastName.textContent = votedFor;
+  toast.classList.add('show');
+  clearTimeout(toast._t);
+  toast._t = setTimeout(() => toast.classList.remove('show'), 3800);
+}
+
+grid.addEventListener('click', e => {
+  const btn = e.target.closest('.btn-vote');
+  if (!btn || btn.disabled || userVote || isEnded()) return;
+  openModal(btn.dataset.name);
+});
+
+document.getElementById('btn-confirm').addEventListener('click', confirmVote);
+document.getElementById('btn-cancel').addEventListener('click', closeModal);
+
+modal.addEventListener('click', e => {
+  if (e.target === modal) closeModal();
+});
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape' && modal.classList.contains('active')) closeModal();
+});
+
+const cdEls = {
+  d: document.getElementById('cd-d'),
+  h: document.getElementById('cd-h'),
+  m: document.getElementById('cd-m'),
+  s: document.getElementById('cd-s')
+};
+const pad = n => String(n).padStart(2, '0');
+
+function tick(){
+  const diff = END_TIME - Date.now();
+
+  if (diff <= 0){
+    const box = document.getElementById('countdown');
+    if (box && !box.dataset.done){
+      box.dataset.done = '1';
+      box.outerHTML = '<div class="cd-ended">Голосование завершено · 16:00 МСК · 20.09.2026</div>';
+      render();
+    }
+    return;
+  }
+
+  cdEls.d.textContent = pad(Math.floor(diff / 86400000));
+  cdEls.h.textContent = pad(Math.floor(diff / 3600000) % 24);
+  cdEls.m.textContent = pad(Math.floor(diff / 60000) % 60);
+  cdEls.s.textContent = pad(Math.floor(diff / 1000) % 60);
+}
+
+render();
+tick();
+setInterval(tick, 1000);
+</script>
+</body>
+</html>
